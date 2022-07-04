@@ -1,0 +1,29 @@
+{% extends "index.html"%}
+
+{% block title %}Cambiar Contrasena - MagnoliaBlog{% endblock %}
+
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% block contenido %}
+</br>
+</br>
+</br>
+</br>
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4" style="color:darkolivegreen">Cambiar Contraseña</h1>
+    </br>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p}}
+            </br>
+                <button type="submit" class="btn btn-success">Cambiar</button>
+            </form>
+    </div>
+</div>
+
+
+{% endblock %}

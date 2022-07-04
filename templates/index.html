@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} MagnoliaBlog {% endblock %}</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand mb-0 h1" href="{% url 'home' %}" style="color:darkolivegreen">Magnolia</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+            <li class="nav-item active ">
+            <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only"></span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'about' %}">About <span class="sr-only"></span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'posts' %}">Publicaciones <span class="sr-only"></span></a>
+            </li>
+            <div class="container">
+                <form class="d-flex" method=POST action="{% url 'resultado' %}">
+                    {% csrf_token %}
+                    <input class="form-control me-2" type="search" 
+                    placeholder="Buscar post" aria-label="Search" name="busqueda">
+                    <button class="btn btn-outline-success" type="submit">Buscar</button>
+                </form>
+            </div>
+        </ul>
+        <ul class="navbar-nav ms-auto">
+            {% if user.is_authenticated %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'publicar' %}">Publicar <span class="sr-only"></span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'editar_perfil' %}">Editar Perfil <span class="sr-only"></span></a>
+                </li>
+                <li class="nav-item active" float:right>
+                    <a class="nav-link" href="{% url 'logout' %}">Salir <span class="sr-only"></span></a>
+                </li>
+            {% else %}
+
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'login' %}">Ingresar <span class="sr-only"></span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'registro' %}">Registrar <span class="sr-only"></span></a>
+                </li>
+            {% endif %}
+        </ul>
+        </div>
+    </nav>
+
+{% block contenido %}
+{% endblock %}
+
+<footer class="bg-light text-center fixed-bottom">
+    <div class="text-center p-3" style="color:darkolivegreen">
+        ©MagnoliaBlog 2020 
+    </div>
+</footer>

@@ -1,0 +1,31 @@
+{% extends "index.html"%}
+
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% block title %}Publicar - MagnoliaBlog{% endblock %}
+{% block contenido %}
+
+<br/>
+<br/>
+<br/>
+{% if user.is_authenticated %}
+<div class="container">
+    <h1 style="color:darkolivegreen">Publicar</h1>
+    <br/>
+    <br/>
+    <div class="form-group">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.media }}
+        {{ form.as_p }}
+        <button class="btn btn-success">Publicar</button>    <a href="{% url 'posts' %}" class="btn btn-secondary">Atras</a>
+    </form>
+ </div>
+</div>
+{% else %}
+<div class="container">
+    <h5>Ingrese para poder acceder a esta pagina</h5>
+</div>
+{% endif %}
+{% endblock %}

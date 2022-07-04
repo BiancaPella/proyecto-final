@@ -1,0 +1,57 @@
+{% extends "index.html"%}
+
+{% block title %}{{ post.title }} - MagnoliaBlog{% endblock %}
+
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% block contenido %}
+<br/>
+<br/>
+<br/>
+<div class="container">
+    <div class="d-flex w-100 justify-content-between" >
+    <h1 style="color:darkolivegreen">{{post.title}}</h1>
+    <small>{{post.post_date}}</small>
+    </div>
+    <small> By: {{post.author.first_name}} {{post.author.last_name}}</small>
+    <hr>
+    <br/>
+    <img src="{{ post.header_image.url }}">
+    
+    <br/><br/>
+    {{post.body|safe}}
+    <br/>
+    <br/>
+    {% if user.is_authenticated %}
+        {% if user.id == post.author.id %}
+            <a class="btn btn-success" href="{% url 'editar' post.pk %}">Editar</a>
+            <a class="btn btn-danger" href="{% url 'eliminar' post.pk %}">Eliminar</a>
+        {% endif%}
+    {% else %}
+    {% endif %}
+    <br/><br/>
+    <h3 style="color:darkolivegreen">Comentarios</h3>
+    {% if not post.comments.all %}
+
+    No hay comentatios... <a href="{% url 'agregar_comentario' post.pk %}">
+        Agregar
+    </a>
+
+    {% else %}
+    <a href="{% url 'agregar_comentario' post.pk %}">Agregar</a>
+    <br/><br/>
+
+    {% for comment in post.comments.all %}
+    <hr/>
+        <strong>{{ comment.name }}</strong> - {{ comment.date_added }}
+        <br/>
+        {{ comment.body }}
+    {% endfor %}
+    {% endif %}
+    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+    
+    
+</div>
+{% endblock %}

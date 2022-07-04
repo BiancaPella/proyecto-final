@@ -1,0 +1,39 @@
+{% extends "index.html"%}
+
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{% block contenido %}
+<br/>
+<br/>
+<br/>
+<div class="container">
+<h1 style="color:darkolivegreen">Todas las Publicaciones</h1>
+<br/>
+<ul class="list-group">
+{% for post in object_list %}
+<div>
+    <a href="{% url 'post_detail' post.pk %}" class="list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">{{post.title}}</h5>
+          <small>{{post.post_date}}</small>
+        </div>
+        <p class="mb-1"><i>{{post.title_tag}}</i></p>
+        <p class="mb-1">{{post.body|slice:":150"|safe}}...</p>
+        <small>Autor: <i>{{post.author}}</i></small> 
+        <br/>
+        <br/>
+        {% if user.is_authenticated %}
+            {% if user.id == post.author.id %}
+                <a class="btn btn-success btn-sm" href="{% url 'editar' post.pk %}">Editar</a>
+                <a class="btn btn-danger btn-sm" href="{% url 'eliminar' post.pk %}">Eliminar</a>
+            {% endif%}
+        {% endif %}
+        </a>
+    </br></div>
+{% endfor %}
+</ul>
+
+</div>
+{% endblock %}

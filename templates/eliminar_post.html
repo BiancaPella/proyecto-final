@@ -1,0 +1,33 @@
+{% extends "index.html"%}
+
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% block title %}Eliminar Post - MagnoliaBlog{% endblock %}
+{% block contenido %}
+
+<br/>
+<br/>
+<br/>
+{% if user.is_authenticated %}
+    {% if user.id == post.author.id %}
+        <div class="container">
+            <h1 style="color:darkolivegreen">Eliminar Post</h1>
+            <h5><i>Eliminar: {{post.title}}</i></h5>
+            <div class="form-group">
+            <form method="POST">
+                {% csrf_token %}
+                <br/>
+                <p>Se encuentra seguro de querer eliminar esta publicacion?</p>
+                <br/>
+                <button class="btn btn-danger">Eliminar</button>    <a href="{% url 'posts' %}" class="btn btn-success">Atras</a>
+            </form>
+        </div>
+        </div>
+    {% endif %}
+{% else %}
+<div class="container">
+    <h5>Ingrese para poder acceder a esta pagina</h5>
+</div>
+{% endif %}
+{% endblock %}
